@@ -34,7 +34,7 @@ open a wall towards it and recursively enter it. If the random check fails we re
     }
 ```
 If we implement a basic maze generation with some basic wall-like structures we get this.
-![Maze basic structure](https://github.com/filipgolaboski/DungeonProceduralGeneration/blob/develop/ReadmeImages/MazeBasic.png?raw=true)
+![Maze basic structure](https://github.com/filipgolaboski/DungeonProceduralGeneration/blob/81fdb3474d73f96be0e3ad86f0492690b99e3aa5/ReadmeImages/MazeBasic.png)
 
 ### Cellular Maze Generation - Conway's game of life
 Another approach to maze generation is by using Conway's game of life to simulate maze-like generation.
@@ -182,6 +182,6 @@ If we create a basic density function in our cellular generation algorithm we ge
 * Improve performance by using unity's BURST compiler and ECS
 * Try to improve the performance of the generated mesh by using the basic mesh generator's indexing capabilities(idea!!)
 
-[rng_terrain]:https://github.com/filipgolaboski/DungeonProceduralGeneration/blob/feature/readme/ReadmeImages/RandomMarchingCubes.png?raw=true
-[cell_terrain]:https://github.com/filipgolaboski/DungeonProceduralGeneration/blob/feature/readme/ReadmeImages/CellMeshMarchingCubes.png?raw=true
-[maze_cellular]:https://github.com/filipgolaboski/DungeonProceduralGeneration/blob/feature/readme/ReadmeImages/CellMeshGen.png?raw=true
+[rng_terrain]:https://github.com/filipgolaboski/DungeonProceduralGeneration/blob/81fdb3474d73f96be0e3ad86f0492690b99e3aa5/ReadmeImages/RandomMarchingCubes.png
+[cell_terrain]:https://github.com/filipgolaboski/DungeonProceduralGeneration/blob/81fdb3474d73f96be0e3ad86f0492690b99e3aa5/ReadmeImages/CellMeshMarchingCubes.png
+[maze_cellular]:https://github.com/filipgolaboski/DungeonProceduralGeneration/blob/81fdb3474d73f96be0e3ad86f0492690b99e3aa5/ReadmeImages/CellMeshGen.png
