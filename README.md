@@ -66,6 +66,8 @@ in which the cell dies if it has more than 4 neighbors.
 ```
 
 The resulting structure looks like this.
+
+
 ![Maze cellular structure][maze_cellular]
 
 ### TODO List
