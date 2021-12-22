@@ -34,7 +34,7 @@ open a wall towards it and recursively enter it. If the random check fails we re
     }
 ```
 If we implement a basic maze generation with some basic wall-like structures we get this.
-![Maze basic structure](https://github.com/filipgolaboski/DungeonProceduralGeneration/blob/feature/readme/ReadmeImages/MazeBasic.png?raw=true)
+![Maze basic structure](https://github.com/filipgolaboski/DungeonProceduralGeneration/blob/develop/ReadmeImages/MazeBasic.png?raw=true)
 
 ### Cellular Maze Generation - Conway's game of life
 Another approach to maze generation is by using Conway's game of life to simulate maze-like generation.
