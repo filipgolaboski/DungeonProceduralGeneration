@@ -33,3 +33,5 @@ public void GenerateMazeData(int x, int y)
     }
 }
 ```
+If we implement a basic maze generation with some basic wall-like structures we get this.
+![Maze basic structure](https://github.com/filipgolaboski/DungeonProceduralGeneration/blob/feature/readme/ReadmeImages/MazeBasic.png?raw=true)
