@@ -148,15 +148,11 @@ public class MazeGeneratorCellular : MonoBehaviour
                 for(int tx=0;tx<4;tx++){
                     for(int ty=0;ty<size.x*4;ty++){
                         for(int tz=0;tz<4;tz++){
-
-                            if(ty>size.x){
-                                if(mazeGraph[x,y].isAlive())
-                                {
+                            if(mazeGraph[x,y].isAlive())
+                            {
                                    // density[tx+x*4,ty,tz+y*4] += .1f + Random.Range(-0.05f,0.05f);
-                                   density[tx+x*4,ty,tz+y*4] += .1f;
-                                }
+                                density[tx+x*4,ty,tz+y*4] += .1f;
                             }
-                                
                         }
                     }
                 }

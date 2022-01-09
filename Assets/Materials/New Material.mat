@@ -61,7 +61,7 @@ Material:
         m_Scale: {x: 10, y: 10}
         m_Offset: {x: 0, y: 0}
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: 87ce03bd447ccce48bbff87ac0d8355f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7465695d5b2a37647ae789b513993dcc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -69,7 +69,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
-        m_Texture: {fileID: 2800000, guid: fab85e0cacda9644a99e5182a86b71f5, type: 3}
+        m_Texture: {fileID: 2800000, guid: fbfea180867b03747abde79ce30c69b7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -80,12 +80,28 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2DLOD_4cf72c8be14940b28f4f4300de8b131b_Texture_1:
+        m_Texture: {fileID: 2800000, guid: c3b89d5b05f82944f81dc62e4ed00c7c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2DLOD_8a9b5dd5ad4a4e90b82e3d330155fe0b_Texture_1:
+        m_Texture: {fileID: 2800000, guid: c3b89d5b05f82944f81dc62e4ed00c7c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2DLOD_e81c82f165da473389834d1019e72c65_Texture_1:
+        m_Texture: {fileID: 2800000, guid: c3b89d5b05f82944f81dc62e4ed00c7c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2DLOD_f8eeae4ea8594e35a6aaedff98c1a3f2_Texture_1:
+        m_Texture: {fileID: 2800000, guid: c3b89d5b05f82944f81dc62e4ed00c7c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SideNormal:
-        m_Texture: {fileID: 2800000, guid: fcce267dfc966b6408dc2ebe0cfb60ed, type: 3}
+        m_Texture: {fileID: 2800000, guid: fab85e0cacda9644a99e5182a86b71f5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SideTexture:
-        m_Texture: {fileID: 2800000, guid: 7140a9bc83a12ea49a081dda89216fff, type: 3}
+        m_Texture: {fileID: 2800000, guid: 87ce03bd447ccce48bbff87ac0d8355f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -128,6 +144,7 @@ Material:
     - _NormalMultiply: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _Percentage: 0.33
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1

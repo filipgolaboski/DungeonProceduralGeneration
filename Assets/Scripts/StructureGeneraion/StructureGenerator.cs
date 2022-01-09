@@ -15,25 +15,11 @@ public class StructureGenerator : MonoBehaviour
     public Vector3Int size;
     public bool generateStructure;
     List<MeshFilter> meshFilters = new List<MeshFilter>();
-    //public MazeGeneratorCellular mazeGeneratorCellular;
 
     public virtual void Generate()
     {
-
-       // mazeGeneratorCellular.Generate();
-        //size = new Vector3Int(mazeGeneratorCellular.size.x*8,mazeGeneratorCellular.size.x*8,mazeGeneratorCellular.size.x*8);
         float[,,] densityData = new float[size.x,size.y,size.z];
         densityDescriptor.InsertDensity(Vector3Int.zero,ref densityData);
-        /* for(int x=0;x<mazeGeneratorCellular.size.x;x++){
-            for(int y=0;y<mazeGeneratorCellular.size.y;y++)
-            {
-                if(mazeGeneratorCellular.mazeGraph[x,y].isAlive())
-                {
-                    densityDescriptor.InsertDensity(new Vector3Int(x*7,74,y*7),ref densityData);
-                }
-            }
-        }
- */
         marchingCubes.InitMeshGeneration(size,densityData);
         List<ChunkData> chunksData = marchingCubes.StartMarchingCubes();
         GenerateMesh(chunksData);
@@ -75,8 +61,6 @@ public class StructureGenerator : MonoBehaviour
             m.SetVertices(chunksData[i].vertexData);
             m.SetTriangles(chunksData[i].triangleData,0);
             m.SetNormals(chunksData[i].normalData);
-           // m.RecalculateNormals(100);
-           // m.RecalculateNormals();
             m.RecalculateBounds();
             m.RecalculateTangents();
             if(chunksData[i].vertexData.Count > 0){

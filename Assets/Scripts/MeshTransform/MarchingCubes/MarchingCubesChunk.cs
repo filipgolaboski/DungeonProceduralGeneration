@@ -113,7 +113,6 @@ public class MarchingCubesChunk
                 vertIndexer.Add(vertex,chunkData.vertexData.Count-1);
                 chunkData.normals.Add(new List<Vector3>());
                 chunkData.normals[chunkData.vertexData.Count-1].Add(normal);
-                //chunkData.normalData.Add(normal);
                 chunkData.triangleData.Add(chunkData.vertexData.Count-1);
         }else{
                 chunkData.triangleData.Add(vertIndexer[vertex]);
@@ -177,21 +176,6 @@ public class MarchingCubesChunk
                                     AddVertex(ref chunkData,ref vertIndexer,vertex3.vertex,vertex3.normal,x,y,z); 
                             }
                     }
-                   /*  List<VertexInternalData> vertexList = GenerateVertexList(densities,position,edgeIndex,isolevel);
-
-                    int rowIndex = 15 * cubeIndex;
-
-                    for(int i=0;MarchingCubesLookupTables.TriangleTable[rowIndex+i] != -1 && i<15; i+=3){
-                        VertexInternalData vertex1 = vertexList[MarchingCubesLookupTables.TriangleTable[rowIndex + i]];
-                        VertexInternalData vertex2 = vertexList[MarchingCubesLookupTables.TriangleTable[rowIndex + i + 1]];
-                        VertexInternalData vertex3 = vertexList[MarchingCubesLookupTables.TriangleTable[rowIndex + i + 2]];
-                            if(!vertex1.Equals(vertex2) && 
-                                !vertex1.Equals(vertex3) && !vertex2.Equals(vertex3)){
-                                    AddVertex(ref chunkData,ref vertIndexer,vertex1.vertex,vertex1.normal,x,y,z);
-                                    AddVertex(ref chunkData,ref vertIndexer,vertex2.vertex,vertex2.normal,x,y,z);
-                                    AddVertex(ref chunkData,ref vertIndexer,vertex3.vertex,vertex2.normal,x,y,z); 
-                            }
-                    } */
                 }
             }
         }
@@ -205,7 +189,6 @@ public class MarchingCubesChunk
             }
             chunkData.normalData[i] /= chunkData.normals[i].Count;
             chunkData.normalData[i].Normalize();
-            //chunkData.normalData[i] = Vector3.Normalize(chunkData.normalData[i]);
         }
 
         chunkData.chunkPosition = chunkPosition;

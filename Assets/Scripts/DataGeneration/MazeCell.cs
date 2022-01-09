@@ -23,7 +23,7 @@ public class MazeCell
     public void Death(MazeCell[,] graph, int x, int y)
     {
         int neighborCount = NeighbourCount(graph,x,y);
-        if(neighborCount > 5)
+        if(neighborCount > 4)
         {
             live = false;
         }

@@ -6,7 +6,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class DungeonCreator : MonoBehaviour
 {
-    public MazeGeneratorCellular mazeGeneratorCellular;
+   /*  public MazeGeneratorCellular mazeGeneratorCellular;
     public MarchingCubes marchingCubes;
 
     public Vector2Int size;
@@ -30,6 +30,6 @@ public class DungeonCreator : MonoBehaviour
         mazeGeneratorCellular.Generate();
         marchingCubes.InitMeshGeneration(new Vector3Int(size.x*4,16,size.x*4),mazeGeneratorCellular.GenerateDensities());
         marchingCubes.GenerateMesh();
-    }
+    } */
 
 }
