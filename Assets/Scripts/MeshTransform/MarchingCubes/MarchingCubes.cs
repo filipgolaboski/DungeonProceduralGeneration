@@ -1,11 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+
 public class DensityChunkData{
     public float[,,] chunkDensity;
-    public Vector3 position;
+    public Vector3Int position;
     public Vector3Int size;
 
     public float ISOLevel;
@@ -19,53 +21,32 @@ public class MarchingCubes : MonoBehaviour
     public Vector3Int size = new Vector3Int(64,16,64);
     public Vector3Int chunk_size = new Vector3Int(16,16,16);
     public float ISOLevel = .5f;
-    public bool startMarchingCubes = false;
-    public MazeGeneratorCellular mazeGen;
 
-    public Material baseMeshMaterial;
 
     List<DensityChunkData> chunkDatabase;
 
-    public float[,,] GenerateDensities(Vector3Int size){
-        float[,,] densities = new float[size.x+4,size.y+4,size.z+4];
-
-        for(int i=0;i<size.x;i++)
-        {
-            for(int j=0;j<size.y;j++)
+    public DensityChunkData SplitChunk(Vector3Int position, Vector3Int chunkSize){
+        DensityChunkData densityChunkData=new DensityChunkData();
+        Vector3Int newSize = chunkSize+Vector3Int.one*2;
+        float[,,] local_density = new float[newSize.x,newSize.y,newSize.z];
+        for(int x=position.x-1, lx=0;x < position.x+newSize.x-1; x++,lx++){
+            for(int y=position.y-1, ly=0;y < position.y+newSize.y-1; y++, ly++)
             {
-                for(int k=0;k<size.z;k++)
-                {
-                    float t = (float)j/(size.y);
-                    if(Random.Range(0f,1f) >.5f){
-                        densities[i,j,k] = t+Random.Range(0,.1f);
+                for(int z=position.z-1, lz=0; z<position.z+newSize.z-1;z++, lz++){
+                    if(z<0 || z>=size.z || y<0 || y>=size.y || x<0 || x>=size.x){
+                        local_density[lx,ly,lz] = 0;
                     }else{
-                        densities[i,j,k] = t;
+                        local_density[lx,ly,lz] = densities[x,y,z];
                     }
                     
                 }
             }
         }
-
-        return densities;
-    }
-
-
-    public DensityChunkData SplitChunk(Vector3Int position, Vector3Int size){
-        DensityChunkData chunkData=new DensityChunkData();
-        float[,,] local_density = new float[size.x,size.y,size.z];
-        for(int x=position.x, lx=0;x < position.x+size.x; x++,lx++){
-            for(int y=position.y, ly=0;y < position.y+size.y; y++, ly++)
-            {
-                for(int z=position.z, lz=0; z<position.z+size.z;z++, lz++){
-                    local_density[lx,ly,lz] = densities[x,y,z];
-                }
-            }
-        }
-        chunkData.chunkDensity = local_density;
-        chunkData.position = position;
-        chunkData.size = size;
-        chunkData.ISOLevel = ISOLevel;
-        return chunkData;
+        densityChunkData.chunkDensity = local_density;
+        densityChunkData.position = position;
+        densityChunkData.size = newSize;
+        densityChunkData.ISOLevel = ISOLevel;
+        return densityChunkData;
     }
 
     public void SplitChunks(Vector3Int chunk_size){
@@ -87,42 +68,15 @@ public class MarchingCubes : MonoBehaviour
     }
 
 
-    public List<VoxelData> StartMarchingCubes(){
+    public List<ChunkData> StartMarchingCubes(){
         SplitChunks(chunk_size);
         MarchingCubesChunk chunk_march = new MarchingCubesChunk();
-        List<VoxelData> voxelDatas = new List<VoxelData>();
+        List<ChunkData> chunksData = new List<ChunkData>();
         for(int i=0;i<chunkDatabase.Count;i++){
             chunk_march.Init(chunkDatabase[i]);
-            voxelDatas.Add(chunk_march.Generate());
+            chunksData.Add(chunk_march.Generate());
         }
-        return voxelDatas;
-    }
-
-    public void GenerateMesh(List<VoxelData> voxelDatas, List<DensityChunkData> densityChunks)
-    {
-        for(int i=0;i<voxelDatas.Count;i++){
-            Mesh m = new Mesh();
-            m.Clear();
-            m.SetVertices(voxelDatas[i].vertexData);
-            m.SetTriangles(voxelDatas[i].triangleData,0);
-            m.SetNormals(voxelDatas[i].normalData);
-            m.RecalculateNormals();
-            m.RecalculateBounds();
-            m.RecalculateTangents();
-            if(voxelDatas[i].vertexData.Count > 0){
-                Unwrapping.GenerateSecondaryUVSet(m);
-            }
- 
-
-            GameObject go = new GameObject("MESH_"+i);
-            go.transform.parent = transform;
-            MeshFilter filter = go.AddComponent<MeshFilter>();
-            go.AddComponent<MeshRenderer>();
-            go.GetComponent<MeshRenderer>().sharedMaterial = baseMeshMaterial;
-            filter.sharedMesh = m;
-            go.transform.localPosition = densityChunks[i].position;
-            Debug.Log("MESH_"+i);
-        }
+        return chunksData;
     }
 
     public void InitMeshGeneration(Vector3Int size, float[,,] densities)
@@ -132,23 +86,4 @@ public class MarchingCubes : MonoBehaviour
         this.densities = densities;
     }
 
-    public void GenerateMesh(){
-        densities = mazeGen.GenerateDensities();
-        List<VoxelData> voxelDatas = StartMarchingCubes();
-        GenerateMesh(voxelDatas,chunkDatabase);
-    }
-
-
-    void Update()
-    {
-        if(startMarchingCubes)
-        {
-            chunkDatabase = new List<DensityChunkData>();
-            size = new Vector3Int(mazeGen.size.x*4,16,mazeGen.size.y*4);
-            densities = mazeGen.GenerateDensities();
-            List<VoxelData> voxelDatas = StartMarchingCubes();
-            GenerateMesh(voxelDatas,chunkDatabase);
-            startMarchingCubes = false;
-        }
-    }
 }
