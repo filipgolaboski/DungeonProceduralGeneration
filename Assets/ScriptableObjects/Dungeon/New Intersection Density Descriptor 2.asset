@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 648575dc6045a044d9020de09229b873, type: 3}
+  m_Name: New Intersection Density Descriptor 2
+  m_EditorClassIdentifier: 
+  size: {x: 0, y: 0, z: 0}
+  position: {x: 0, y: 0, z: 0}
+  lhsDensityDescriptor: {fileID: 11400000, guid: d8a790793e030994dbacc52e4e7eed6d, type: 2}
+  rhsDensityDescriptor: {fileID: 11400000, guid: c315aabb5e294344bbcd10b003156832, type: 2}
+  smoothing: 0.1

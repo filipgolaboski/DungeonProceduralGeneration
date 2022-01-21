@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8407aca240453b44499628e0a53bb776, type: 3}
+  m_Name: New Dungeon Density Generator
+  m_EditorClassIdentifier: 
+  size: {x: 256, y: 64, z: 256}
+  position: {x: 0, y: 0, z: 0}
+  line: {fileID: 11400000, guid: be63bde2b49f806458c5ffc2d7417919, type: 2}
+  room:
+  - {fileID: 11400000, guid: f8673444b6dbd554ea3f895617779a7a, type: 2}
+  - {fileID: 11400000, guid: 01894cac7ebc5d3479c2797f2f379187, type: 2}
+  - {fileID: 11400000, guid: 732093d18ebdd3442be133a6c15177f3, type: 2}
+  - {fileID: 11400000, guid: a47c1c3f3db651c4796813d18a22a245, type: 2}
+  generate: 0
+  generationRange: {x: 64, y: 64}
+  centerDistancing: {x: 0.01, y: 0.01}
+  minRoomSize: 3
+  maxRoomSize: 15
+  roomsNumber: 20
+  offsetRoad: {x: 0, y: 32, z: 0}
+  offsetRoom: {x: 0, y: 35, z: 0}

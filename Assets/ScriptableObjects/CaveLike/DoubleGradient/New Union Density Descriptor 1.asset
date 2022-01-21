@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbca5e3e990267b49bca293f73d303ff, type: 3}
+  m_Name: New Union Density Descriptor 1
+  m_EditorClassIdentifier: 
+  size: {x: 0, y: 0, z: 0}
+  lhsDensityDescriptor: {fileID: 11400000, guid: 90c4b5e2215abd342bac70682ad41955, type: 2}
+  rhsDensityDescriptor: {fileID: 11400000, guid: 02f5d6fe09e195e419fd424d790f71d0, type: 2}
+  smoothing: 1
