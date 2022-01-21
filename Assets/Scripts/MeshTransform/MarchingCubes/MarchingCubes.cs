@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Unity.Collections;
+using Unity.Jobs;
 using UnityEditor;
 using UnityEngine;
 
 
 public class DensityChunkData{
-    public float[,,] chunkDensity;
+    public BaseDensityDescriptor chunkDensity;
     public Vector3Int position;
     public Vector3Int size;
 
@@ -17,7 +20,7 @@ public class DensityChunkData{
 [ExecuteInEditMode]
 public class MarchingCubes : MonoBehaviour
 {
-    public float[,,] densities;
+    BaseDensityDescriptor densities;
     public Vector3Int size = new Vector3Int(64,16,64);
     public Vector3Int chunk_size = new Vector3Int(16,16,16);
     public float ISOLevel = .5f;
@@ -27,24 +30,9 @@ public class MarchingCubes : MonoBehaviour
 
     public DensityChunkData SplitChunk(Vector3Int position, Vector3Int chunkSize){
         DensityChunkData densityChunkData=new DensityChunkData();
-        Vector3Int newSize = chunkSize+Vector3Int.one*2;
-        float[,,] local_density = new float[newSize.x,newSize.y,newSize.z];
-        for(int x=position.x-1, lx=0;x < position.x+newSize.x-1; x++,lx++){
-            for(int y=position.y-1, ly=0;y < position.y+newSize.y-1; y++, ly++)
-            {
-                for(int z=position.z-1, lz=0; z<position.z+newSize.z-1;z++, lz++){
-                    if(z<0 || z>=size.z || y<0 || y>=size.y || x<0 || x>=size.x){
-                        local_density[lx,ly,lz] = 0;
-                    }else{
-                        local_density[lx,ly,lz] = densities[x,y,z];
-                    }
-                    
-                }
-            }
-        }
-        densityChunkData.chunkDensity = local_density;
+        densityChunkData.chunkDensity = densities;
         densityChunkData.position = position;
-        densityChunkData.size = newSize;
+        densityChunkData.size = chunkSize;
         densityChunkData.ISOLevel = ISOLevel;
         return densityChunkData;
     }
@@ -68,18 +56,28 @@ public class MarchingCubes : MonoBehaviour
     }
 
 
-    public List<ChunkData> StartMarchingCubes(){
+    public async Task<List<ChunkData>> StartMarchingCubesAsync(){
         SplitChunks(chunk_size);
         MarchingCubesChunk chunk_march = new MarchingCubesChunk();
+        List<Task<ChunkData>> chunkTasks = new List<Task<ChunkData>>();
         List<ChunkData> chunksData = new List<ChunkData>();
-        for(int i=0;i<chunkDatabase.Count;i++){
+        for (int i = 0; i < chunkDatabase.Count; i++)
+        {
+            Debug.Log(i);
             chunk_march.Init(chunkDatabase[i]);
-            chunksData.Add(chunk_march.Generate());
+            chunkTasks.Add(chunk_march.Generate());
         }
+
+        for(int i = 0; i < chunkTasks.Count; i++)
+        {
+            ChunkData d = await chunkTasks[i];
+            chunksData.Add(d);
+        }
+
         return chunksData;
     }
 
-    public void InitMeshGeneration(Vector3Int size, float[,,] densities)
+    public void InitMeshGeneration(Vector3Int size, BaseDensityDescriptor densities)
     {
         chunkDatabase = new List<DensityChunkData>();
         this.size = size;

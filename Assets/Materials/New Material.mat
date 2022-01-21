@@ -144,7 +144,7 @@ Material:
     - _NormalMultiply: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.005
-    - _Percentage: 0.33
+    - _Percentage: 0.58
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1

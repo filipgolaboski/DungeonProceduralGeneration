@@ -15,10 +15,8 @@ public class MazeGeneratorCellular : MonoBehaviour
     private bool isGenerating = false;
     public int numberOfGenerations;
     public int generationMultiplier = 32;
-    public GameObject cellPrefab;
     int currentGeneration;
 
-    public BasicMeshGenerator meshGenerator;
 
     private void OnEnable() {
         EditorApplication.update += EditorUpdate; 
@@ -60,7 +58,6 @@ public class MazeGeneratorCellular : MonoBehaviour
             }else{
                 isGenerating = false;
                 //Instantiate();
-                meshGenerator.GenerateMesh(mazeGraph,size);
             }
         }
     }
@@ -87,21 +84,6 @@ public class MazeGeneratorCellular : MonoBehaviour
         
     }
 
-    public void Instantiate(){
-        for(int i=0;i<size.x;i++)
-        {
-            for(int j=0;j<size.y;j++){
-                if(mazeGraph[i,j].isAlive()){
-                    GameObject g = Instantiate<GameObject>(cellPrefab,transform);
-                    g.transform.localPosition = new Vector3(i,0,j);
-                }else{
-                    GameObject g = Instantiate<GameObject>(cellPrefab,transform);
-                    g.transform.localPosition = new Vector3(i,1,j);
-                }
-            }
-        }
-    }
-
     public void SeedGraph()
     {
         mazeGraph = new MazeCell[size.x,size.y];
@@ -125,43 +107,7 @@ public class MazeGeneratorCellular : MonoBehaviour
         }
     }
 
-    public float[,,] GenerateDensities()
-    {
-        float[,,] density= new float[size.x*4,size.x*4,size.x*4];
 
-
-        for(int i=0;i<size.x*4;i++)
-        {
-           for(int j=0;j<size.x*4;j++)
-           {
-                for(int k=0;k<size.x*4;k++)
-                {
-                    density[i,j,k] = (float)j/(size.x*4);
-                } 
-           } 
-        }
-
-        for(int x=0;x<size.x;x++)
-        {
-            for(int y=0;y<size.x;y++)
-            {
-                for(int tx=0;tx<4;tx++){
-                    for(int ty=0;ty<size.x*4;ty++){
-                        for(int tz=0;tz<4;tz++){
-                            if(mazeGraph[x,y].isAlive())
-                            {
-                                   // density[tx+x*4,ty,tz+y*4] += .1f + Random.Range(-0.05f,0.05f);
-                                density[tx+x*4,ty,tz+y*4] += .1f;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-
-        return density;
-    }
 }
 
 

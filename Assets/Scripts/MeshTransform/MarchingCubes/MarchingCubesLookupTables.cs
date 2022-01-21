@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MarchingCubesLookupTables
 {
-    public static Vector3Int[] CubeCorners = new Vector3Int[]
+    public static readonly Vector3Int[] CubeCorners = new Vector3Int[]
     {
         Vector3Int.zero,
         Vector3Int.right,

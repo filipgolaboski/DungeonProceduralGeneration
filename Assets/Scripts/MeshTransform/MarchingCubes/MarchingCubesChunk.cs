@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
@@ -24,13 +25,13 @@ public class MarchingCubesChunk
 {
     public float isolevel = 0.5f;
     int size;
-    float [,,] densities_matrix;
+    BaseDensityDescriptor densities;
     Vector3Int chunkPosition;
 
     public void Init(DensityChunkData chunkData){
         this.isolevel = chunkData.ISOLevel;
         this.size = chunkData.size.x;
-        this.densities_matrix = chunkData.chunkDensity;
+        this.densities = chunkData.chunkDensity;
         chunkPosition = chunkData.position;
     }
 
@@ -69,7 +70,7 @@ public class MarchingCubesChunk
 
     public float GetDensity(Vector3Int pos)
     {
-        return densities_matrix[pos.x,pos.y,pos.z];
+        return densities.GetDensity(pos);
     }
 
     public VertexInternalData VertexInterpolate(Vector3Int p1, Vector3Int p2, float v1, float v2, float isoLevel)
@@ -86,14 +87,14 @@ public class MarchingCubesChunk
 
 
     public VertexInternalData CreateVertex(Vector3Int corner1, Vector3Int corner2){
-        float density1 = densities_matrix[corner1.x,corner1.y,corner1.z];
-        float density2 = densities_matrix[corner2.x,corner2.y,corner2.z];
+        float density1 = GetDensity(corner1);
+        float density2 = GetDensity(corner2);
 
         return VertexInterpolate(corner1,corner2,density1,density2,isolevel);
     }
 
 
-    public float[] GetCubeDensities(float[,,] densities, Vector3Int position)
+    public float[] GetCubeDensities(Vector3Int position)
     {
         float[] d = new float[8];
 
@@ -109,7 +110,7 @@ public class MarchingCubesChunk
 
     public void AddVertex(ref ChunkData chunkData, ref Dictionary<Vector3,int> vertIndexer,Vector3 vertex, Vector3 normal,int x,int y, int z){
         if(!vertIndexer.ContainsKey(vertex)){
-                chunkData.vertexData.Add(vertex);
+                chunkData.vertexData.Add(vertex+chunkData.chunkPosition);
                 vertIndexer.Add(vertex,chunkData.vertexData.Count-1);
                 chunkData.normals.Add(new List<Vector3>());
                 chunkData.normals[chunkData.vertexData.Count-1].Add(normal);
@@ -130,19 +131,19 @@ public class MarchingCubesChunk
         return corners;
     }
 
-    public ChunkData Generate(){
+    public async Task<ChunkData> Generate(){
         List<Vector3> vertices = new List<Vector3>();
         List<int> triangles = new List<int>();
         Dictionary<Vector3,int> vertIndexer = new Dictionary<Vector3, int>();
         ChunkData chunkData = new ChunkData();
 
-        for(int x=1;x<size-2;x++){
-            for(int y=1;y<size-2;y++)
+        for(int x= chunkPosition.x; x< chunkPosition.x + size - 1;x++){
+            for(int y= chunkPosition.y; y< chunkPosition.y + size - 1;y++)
             {
-                for(int z=1;z<size-2;z++)
+                for(int z= chunkPosition.z; z< chunkPosition.z + size - 1;z++)
                 {
                     Vector3Int position = new Vector3Int(x,y,z);
-                    float[] densities = GetCubeDensities(densities_matrix,position);
+                    float[] densities = GetCubeDensities(position);
 
                     int cubeIndex = CalculateCubeIndex(densities,isolevel);
                     if(cubeIndex == 0 || cubeIndex == 255){
@@ -151,8 +152,8 @@ public class MarchingCubesChunk
 
                     int[] edgeIndex = MarchingCubesLookupTables.triangulation[cubeIndex];
                     List<Vector3Int> cubeCorners = GetVoxelCorners(position);
-                    for(int i=0;i<16;i+=3){
-                        if(edgeIndex[i] == -1){break;};
+                    for(int i=0; edgeIndex[i] != -1; i+=3){
+
 
                         int edgeIndexA = edgeIndex[i];
                         int a0 = MarchingCubesLookupTables.EdgeIndexTableA[edgeIndexA];
@@ -191,7 +192,6 @@ public class MarchingCubesChunk
             chunkData.normalData[i].Normalize();
         }
 
-        chunkData.chunkPosition = chunkPosition;
         return chunkData;
     }
 }

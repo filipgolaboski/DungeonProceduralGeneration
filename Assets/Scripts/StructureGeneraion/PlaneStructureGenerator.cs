@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlaneStructureGenerator : StructureGenerator
-{
+{/*
     public SimplexNoiseDensityDescriptor simplexNoiseDensityDescriptor;
 
     public override void Generate()
@@ -28,5 +28,5 @@ public class PlaneStructureGenerator : StructureGenerator
         marchingCubes.InitMeshGeneration(size,densityData);
         List<ChunkData> chunksData = marchingCubes.StartMarchingCubes();
         GenerateMesh(chunksData);
-    }
+    }*/
 }
