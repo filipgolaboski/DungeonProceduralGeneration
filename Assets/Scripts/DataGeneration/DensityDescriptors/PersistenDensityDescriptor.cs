@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Densities/PersistentDensityDescriptor")]
 public class PersistenDensityDescriptor : BaseDensityDescriptor
 {
+    [SerializeField]
     float[,,] density;
 
     public override float GetDensity(Vector3Int point)
